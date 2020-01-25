@@ -1,0 +1,20 @@
+        <div class="form-group">
+            {{Form::label('newpassword', 'New Password')}}
+            {{Form::password('newpassword',[ 'class' => 'form-control', 'placeholder' => 'New Password'])}}
+            @error('newpassword')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+
+        </div>
+        <div class="form-group">
+            {{Form::label('newpassword_confirmation', 'Confirm Password')}}
+            {{Form::password('newpassword_confirmation',[ 'class' => 'form-control', 'placeholder' => 'Confirm Password'])}}
+        </div>
+
+
+
+
+
+        
