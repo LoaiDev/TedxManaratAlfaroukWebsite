@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\UserType;
 
 class test extends Controller
 {
@@ -13,7 +16,9 @@ class test extends Controller
      */
     public function index()
     {
-        //
+        $testtype = new Usertype;
+        $testtype->name='test name';
+        $testtype->save();
     }
 
     /**
@@ -32,9 +37,18 @@ class test extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+    /*
+        $testtype = new UserType;
+        $testtype->name='test child';
+        $testtype->parent_id= 1;
+        $testtype->save();
+    */
+        $user = Auth::user();
+        //return $user->name;
+        $types = UserType::find([1,2]);
+        $user->user_types()->attach($types);
     }
 
     /**
