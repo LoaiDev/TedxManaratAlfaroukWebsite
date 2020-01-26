@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function list()
     {
-        $users = User::all();
+        $users = User::paginate(10);
         return view('users.index')->with('users',$users);
     }
     public function edit($id)
