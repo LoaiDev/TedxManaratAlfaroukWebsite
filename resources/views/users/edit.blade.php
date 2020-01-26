@@ -9,7 +9,7 @@
     </div>
     @endforeach
     @endif
-    {!! Form::open(['action' => ['UserController@update'], 'method'=> 'POST']) !!}
+    {!! Form::open(['action' => ['UserController@update', $user->id], 'method'=> 'POST']) !!}
         @csrf
 
         <div class="form-group">
@@ -29,20 +29,16 @@
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
-
-        </div>
+        </div>   
         <div class="form-group">
-            {{Form::label('currentpassword', 'Current Password')}}
-            {{Form::password('currentpassword',[ 'class' => 'form-control', 'placeholder' => 'Current Password'])}}
-            @error('currentpassword')
+            {{Form::label('yourpassword', 'Your Password')}}
+            {{Form::password('password',[ 'class' => 'form-control', 'placeholder' => 'Your Password'])}}
+            @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
-
         </div>
-        
-        {{Form::hidden('user', $user->id)}}
         {{Form::hidden('_method','PUT')}}
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}

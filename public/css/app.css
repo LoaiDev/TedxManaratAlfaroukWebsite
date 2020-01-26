@@ -2236,6 +2236,12 @@ pre code {
   border-color: #dee2e6;
 }
 
+.table .thead-red th {
+  color: #fff;
+  background-color: #e3342f;
+  border-color: #dee2e6;
+}
+
 .table-dark {
   color: #fff;
   background-color: #343a40;

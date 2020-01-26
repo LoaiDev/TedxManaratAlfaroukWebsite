@@ -1,24 +1,35 @@
 @extends('layouts.app')
-
 @section('content')
-    <h1>Profile</h1>
-    @if ($errors->any())
-    @foreach ($errors->all() as $error)
-    <div class="alert alert-danger">
-            <label>{{ $error }}</label>           
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <h1>All Users</h1>
     </div>
-    @endforeach
-    @endif
-    <div class="form-group">
-        <label>Name: </label>
-        <p class= "form-control" style="text-transform: capitalize;">{{$user->name}}</p>
-        <label>Email: </label>
-        <p class= "form-control">{{$user->email}}</p>
-    </div>
-    <a href="/user/edit" class="btn btn-primary">Edit</a>
-    {!!Form::open(['route' => ['user.deactivate', $user->id], 'method' => 'POST', 'class' => 'pull-right pt-2'])!!}
-        {{Form::hidden('_method', 'DELETE')}}
-        {{Form::hidden('user', $user->id)}}
-        {{Form::submit('Deactivate', ['class' => 'btn btn-danger'])}}
-    {!!Form::close()!!}
+</div>
+<table class="table table-striped">
+    <thead class="thead-red">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Types</th>
+      </tr>
+    </thead>
+    <tbody>
+      @php
+          $count=1;
+      @endphp
+      @foreach ($users as $user)
+          <tr>
+          <th scope="row">{{$count}}</th>
+          <td><a class="text-capitalize" href="/user/{{$user->id}}">{{$user->name}}</a></td>
+          <td>{{$user->email}}</td>
+          <td>{{$user->user_types->first()->name}}</td>
+          </tr>
+        @php
+          $count++;
+        @endphp
+      @endforeach
+    </tbody>
+  </table>
+  
 @endsection

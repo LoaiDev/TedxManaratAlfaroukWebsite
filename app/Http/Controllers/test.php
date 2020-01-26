@@ -45,10 +45,12 @@ class test extends Controller
         $testtype->parent_id= 1;
         $testtype->save();
     */
-        $user = Auth::user();
+        $user = User::FindOrFail(1);
         //return $user->name;
-        $types = UserType::find([1,2]);
-        $user->user_types()->attach($types);
+        //$types = UserType::find([1,2]);
+        //$user->user_types()->attach($types);
+        $type = $user->user_types->last();
+        echo ($types->name);
     }
 
     /**

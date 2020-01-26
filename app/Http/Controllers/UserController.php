@@ -22,21 +22,28 @@ class UserController extends Controller
     public function index()
     {
       $user = Auth::user();
-      return view ('users.index')->with('user',$user);
+      return redirect ('/user/'.$user->id);
     }
 
-    
-    public function edit()
+
+    public function show($id)
     {
-        $user = Auth::user();
-        
-        //Check if post exists before deleting
+        $user = User::FindOrFail($id);
+        return view ('users.show')->with('user',$user);
+    }
+
+    public function list()
+    {
+        $users = User::all();
+        return view('users.index')->with('users',$users);
+    }
+    public function edit($id)
+    {
+        $user = User::FindOrFail($id);  
         if (!isset($user)){
-            return redirect('/')->with('error', 'No User Found');
+            return redirect('/')->withError('No User Found');
         }
-
         else{
-
         return view('users.edit')->with('user', $user);
         }
     }
@@ -48,42 +55,37 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request , $id)
     {
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'currentpassword' => ['required', 'string'],
+            'password' => ['required', 'string'],
             //'newpassword' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         
-        $user = Auth::user();
-        $requestUID = $request ->user;
-        $userID = $user->id;
-        if($requestUID != $userID){        
-            return redirect('/user/edit')->withErrors('Unauthorized action');
-        }
-        
-        if (Hash::check($request->currentpassword, $user->password)) {
+        $user = User::FindOrFail($id);
+        $route = '/user/'.$id.'/edit';
+        if (Hash::check($request->password, Auth::user()->password)) {
         }
         else{
-            return redirect('/user/edit')->withErrors('Wrong Password');
+            return redirect($route)->withErrors('Wrong Password');
         }
         $raw = User::where('email', $request->email)->get();
         if(count($raw)!=0) {
             if(count($raw)!=1) {
-                return redirect('/user/edit')->withErrors('Unknown error');
+                return redirect($route)->withErrors('Unknown error');
             }
             else{
                 if($request->email != $user->email){
-                    return redirect('/user/edit')->withErrors('Email already registered');
+                    return redirect($route)->withErrors('Email already registered');
                 }
             }
         }
             $user->name = $request->name;
             $user->email = $request->email;
             $user->save();
-            return redirect('/user');
+            return redirect('/user/'.$id);
     }
 
     /**
@@ -94,13 +96,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = Auth::user();
-        if($id != $user->id){        
-        return redirect('/user')->withErrors('Unauthorized action');
-        }
-        else{
+        $user = User::FindOrFail($id);
          $user->delete();
-         return redirect('/');
-        }
+         return redirect('/users');
     }
 }
