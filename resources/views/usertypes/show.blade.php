@@ -8,7 +8,7 @@
     </div>
     <div class="form-group">
         <label>Parent</label>
-        <p class= "form-control">{{$parent->name ?? 'None'}}</p>
+        <p class= "form-control text-capitalize">{{$parent->name ?? 'None'}}</p>
     </div>
     <div class="container">
         <div class="row justify-content-between">

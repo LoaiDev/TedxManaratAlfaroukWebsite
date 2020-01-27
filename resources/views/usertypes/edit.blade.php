@@ -18,7 +18,7 @@
 
         <div class="form-group">
             <label for="parent">Parent</label>
-            <select name="parent" class="form-control @error('parent') is-invalid @enderror">
+            <select name="parent" class="form-control text-capitalize @error('parent') is-invalid @enderror">
                 <option class="text-capitalize" value="0" @if(old('parent', $parent->id ?? 0) == 0) selected @endif>None</option>
                 @foreach($usertypes as $usertyp)
                     <option class="text-capitalize" value="{{$usertyp->id}}" @if(old('parent', $parent->id ?? 0) == $usertyp->id) selected @endif>{{$usertyp->name}}</option>

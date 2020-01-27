@@ -15,7 +15,9 @@ class test extends Controller
      */
     public function index()
     {
-        echo config('variable.defaultUserType');
+        $usertype = UserType::findOrFail(1);
+        $parent = $usertype->childs;
+        echo ($parent);
     }
 
     /**

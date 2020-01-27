@@ -26,7 +26,7 @@ class UserTypeController extends Controller
     public function show($id)
     {
         $usertype = UserType::FindOrFail($id);
-        $parent = UserType::Find($usertype->parent_id);
+        $parent = $usertype->parent;
         return view ('usertypes.show')->with(['usertype'=> $usertype ,'parent'=> $parent]);    
     }
 
@@ -81,7 +81,7 @@ class UserTypeController extends Controller
     {
         //get user of specified id
         $usertype = UserType::FindOrFail($id);
-        $parent = UserType::Find($usertype->parent_id);
+        $parent = $usertype->parent;
         $usertypes = UserType::orderBy('name','asc')->get()->except($id);
         return view ('usertypes.edit')->with(['usertype'=> $usertype ,'parent'=> $parent ,'usertypes' => $usertypes]);
     }
