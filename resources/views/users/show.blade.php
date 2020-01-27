@@ -15,10 +15,18 @@
         <label>Email: </label>
         <p class= "form-control">{{$user->email}}</p>
     </div>
-    <a href="/user/{{$user->id}}/edit" class="btn btn-primary">Edit</a>
-    {!!Form::open(['action' => ['UserController@destroy', $user->id], 'method' => 'POST', 'class' => 'pull-right pt-2'])!!}
-        {{Form::hidden('_method', 'DELETE')}}
-        {{Form::hidden('user', $user->id)}}
-        {{Form::submit('Deactivate', ['class' => 'btn btn-danger'])}}
-    {!!Form::close()!!}
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-sm-auto row justify-content-center full-width-sm">
+                <a href="/user/{{$user->id}}/edit" class="btn btn-primary px-4 full-width-sm">Edit</a>
+            </div>
+            <div class="col-sm-auto row justify-content-center mt-2 mt-sm-0">
+                <form action="{{route ('user.destroy' , $user->id)}}" class="row justify-content-center full-width-sm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger full-width-sm">Deactivate</button>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

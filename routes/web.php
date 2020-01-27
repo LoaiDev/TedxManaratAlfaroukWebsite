@@ -18,9 +18,16 @@ Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
 Route::get('/user', 'UserController@index');
+
 //Route::get('/user/edit', 'UserController@edit');
 //Route::match(['put', 'patch'],'/user/edit', 'UserController@update');
 //Route::delete('/user/deactivate/{id}', 'UserController@destroy')->name('user.deactivate');
-Route::resource ('user', 'UserController');
-Route::get('/test', 'test@store');
+
+Route::resource ('usertype', 'UserTypeController');
+Route::get('/usertypes', 'UserTypeController@list');
+
+Route::resource ('user', 'UserController' ,[
+    'except' => ['store', 'create']
+]);
 Route::get('/users', 'UserController@list');
+Route::get('/test', 'test@index');

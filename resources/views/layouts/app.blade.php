@@ -67,6 +67,7 @@
                                     </a>
                                     <a class="dropdown-item" href="/user/{{ Auth::user()->id}}">Profile</a>
                                     <a class="dropdown-item" href="/users">Manage Users</a>
+                                    <a class="dropdown-item" href="/usertypes">Manage User Types</a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -82,6 +83,18 @@
         <main class="py-4">
             @yield('heading')
             <div class="container">
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger">
+                        <label>{{ $error }}</label>           
+                        </div>
+                   @endforeach
+                @endif
+                 @if (session('success'))
+                     <div class="alert alert-success">
+                       <strong>{{ session('success') }}</strong>           
+                       </div>
+              @endif
                 @yield('content')
             </div>
         </main>

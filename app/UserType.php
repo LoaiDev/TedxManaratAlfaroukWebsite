@@ -11,4 +11,9 @@ class UserType extends Model
     {
         return $this->belongsToMany('App\User')->withTimestamps();
     }
+
+    public static $defaultUserType;
+    public static function setDefaultUserType($value){
+        self::$defaultUserType = $value;
+    }
 }

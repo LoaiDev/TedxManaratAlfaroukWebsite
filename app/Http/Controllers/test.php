@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\UserType;
-
 class test extends Controller
 {
     /**
@@ -16,9 +15,7 @@ class test extends Controller
      */
     public function index()
     {
-        $testtype = new Usertype;
-        $testtype->name='test name';
-        $testtype->save();
+        echo config('variable.defaultUserType');
     }
 
     /**
@@ -39,18 +36,7 @@ class test extends Controller
      */
     public function store()
     {
-    /*
-        $testtype = new UserType;
-        $testtype->name='test child';
-        $testtype->parent_id= 1;
-        $testtype->save();
-    */
-        $user = User::FindOrFail(1);
-        //return $user->name;
-        //$types = UserType::find([1,2]);
-        //$user->user_types()->attach($types);
-        $type = $user->user_types->last();
-        echo ($types->name);
+    
     }
 
     /**

@@ -39,7 +39,9 @@ class UserController extends Controller
     }
     public function edit($id)
     {
+        //get user of specified id
         $user = User::FindOrFail($id);  
+        //check if there is a user
         if (!isset($user)){
             return redirect('/')->withError('No User Found');
         }
@@ -57,35 +59,41 @@ class UserController extends Controller
      */
     public function update(Request $request , $id)
     {
+        //validate incoming data
         $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'], 
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string'],
             //'newpassword' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         
+        //get user of the specified id
         $user = User::FindOrFail($id);
+        //set the route back in case of failure
         $route = '/user/'.$id.'/edit';
-        if (Hash::check($request->password, Auth::user()->password)) {
+        //verify the password of the editor
+        if (!Hash::check($request->password, Auth::user()->password)) {
+            return redirect($route)->withErrors(['password'=>'Wrong Password'])->withInput();
         }
-        else{
-            return redirect($route)->withErrors('Wrong Password');
+        //if the editor changed the email
+        if ($request->email != $user->email){
+            //check if there was a record found (email was registered by another user)
+            if (User::where('email', '=', $request->email )->exists()) {
+                // user found
+                return redirect($route)->withErrors(['email'=>'Email Already Registered'])->withInput();
+             }
+               
+            //if the email wasn't used set the user email to the email input
+                $user->email = $request->email;
         }
-        $raw = User::where('email', $request->email)->get();
-        if(count($raw)!=0) {
-            if(count($raw)!=1) {
-                return redirect($route)->withErrors('Unknown error');
-            }
-            else{
-                if($request->email != $user->email){
-                    return redirect($route)->withErrors('Email already registered');
-                }
-            }
-        }
+        //check if editor changed name
+        if ($request->name != $user->name){
+            //if true change the name
             $user->name = $request->name;
-            $user->email = $request->email;
+        }
+            //save the user
             $user->save();
-            return redirect('/user/'.$id);
+            return redirect('/user/'.$id)->withSuccess('User Edited Successfully');
     }
 
     /**
@@ -96,8 +104,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        //get the user of the specified id
         $user = User::FindOrFail($id);
+        //delete user
          $user->delete();
-         return redirect('/users');
+         //return to index
+         return redirect('/users')->withSuccess('User Deactivated Successfully');
     }
 }
