@@ -14,7 +14,7 @@
 Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 
-Auth::routes();
+Auth::routes(['reset' => false, 'request' => false]);
 
 Route::get('/dashboard', 'DashboardController@index');
 Route::get('/user', 'UserController@index');

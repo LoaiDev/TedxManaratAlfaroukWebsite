@@ -10,6 +10,13 @@ use App\UserType;
 
 class UserTypeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
     public function index()
     {
       return redirect ('/usertypes');
