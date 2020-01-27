@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\UserType;
 
 class UserController extends Controller
 {
@@ -40,14 +41,9 @@ class UserController extends Controller
     public function edit($id)
     {
         //get user of specified id
-        $user = User::FindOrFail($id);  
-        //check if there is a user
-        if (!isset($user)){
-            return redirect('/')->withError('No User Found');
-        }
-        else{
-        return view('users.edit')->with('user', $user);
-        }
+        $user = User::FindOrFail($id);
+        $usertypes = UserType::orderBy('name','asc')->get();
+        return view('users.edit')->with(['user'=> $user , 'usertypes' => $usertypes]);
     }
 
     /**
@@ -63,6 +59,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'], 
             'email' => ['required', 'string', 'email', 'max:255'],
+            'usertype' => ['required', 'integer'],
             'password' => ['required', 'string'],
             //'newpassword' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -91,6 +88,13 @@ class UserController extends Controller
             //if true change the name
             $user->name = $request->name;
         }
+        if($request->usertype != 0){
+            //set the usertype parent to the parent input
+                $user->user_types()->sync($request->usertype);
+            }
+            else{
+                $user->user_types()->detach();
+            }
             //save the user
             $user->save();
             return redirect('/user/'.$id)->withSuccess('User Edited Successfully');

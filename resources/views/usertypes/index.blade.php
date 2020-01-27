@@ -8,7 +8,7 @@
       <a href="/usertype/create" class="full-width btn btn-lg btn-success">Create New User Type</a>
   </div>
 </div>
-<table class="table table-striped">
+<table class="table table-striped text-capitalize">
     <thead class="thead-red">
       <tr>
         <th scope="col">#</th>

@@ -29,11 +29,7 @@
           <th scope="row">{{$count}}</th>
           <td><a class="text-capitalize" href="/user/{{$user->id}}">{{$user->name}}</a></td>
           <td>{{$user->email}}</td>
-          @if (!empty($user->user_types->first()))
-            <td>{{$user->user_types->first()->name}}</td>
-          @else
-          <td>None</td>
-          @endif
+          <td class="text-capitalize">{{$user->user_types->first()->name ?? 'None'}}</td>
           </tr>
         @php
           $count++;

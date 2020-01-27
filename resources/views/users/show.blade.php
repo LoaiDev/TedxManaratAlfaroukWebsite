@@ -15,6 +15,10 @@
         <label>Email: </label>
         <p class= "form-control">{{$user->email}}</p>
     </div>
+    <div class="form-group">
+        <label>User Type</label>
+        <p class= "form-control text-capitalize">{{$user->user_types->first()->name ?? 'None'}}</p>
+    </div>
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-sm-auto row justify-content-center full-width-sm">

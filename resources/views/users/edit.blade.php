@@ -24,6 +24,20 @@
                 </span>
             @enderror
         </div>
+        <div class="form-group">
+            <label for="usertype">User Type</label>
+            <select name="usertype" class="form-control text-capitalize @error('usertype') is-invalid @enderror">
+                <option class="text-capitalize" value="0" @if(old('usertype', $user->user_types->first()->id ?? 0) == 0) selected @endif>None</option>
+                @foreach($usertypes as $usertyp)
+                    <option class="text-capitalize" value="{{$usertyp->id}}" @if(old('usertype', $user->user_types->first()->id ?? 0) == $usertyp->id) selected @endif>{{$usertyp->name}}</option>
+                @endforeach
+            </select>
+            @error('usertype')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
 
         <div class="form-group">
             <label for="password">Your Password</label>
