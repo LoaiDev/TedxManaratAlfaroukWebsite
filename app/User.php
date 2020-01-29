@@ -38,8 +38,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function user_types()
+    public function user_type()
     {
-        return $this->belongsToMany('App\UserType')->withTimestamps();
+        return $this->belongsTo('App\UserType');
     }
 }

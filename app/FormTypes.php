@@ -1,22 +1,24 @@
 <?php
 
 namespace App;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-class UserType extends Model
+
+class FormTypes extends Model
 {
     use SoftDeletes;
-    public function users()
+
+    public function forms()
     {
         return $this->hasMany('App\User');
     }
     public function parent()
     {
-        return $this->belongsTo('App\UserType');
+        return $this->belongsTo('App\FormType');
     }
     public function childs()
     {
-        return $this->hasMany('App\UserType', 'parent_id');
+        return $this->hasMany('App\FormType', 'parent_id');
     }
 }

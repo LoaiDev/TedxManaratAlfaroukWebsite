@@ -17,7 +17,7 @@
     </div>
     <div class="form-group">
         <label>User Type</label>
-        <p class= "form-control text-capitalize">{{$user->user_types->first()->name ?? 'None'}}</p>
+        <p class= "form-control text-capitalize">{{$user->user_type->name ?? 'None'}}</p>
     </div>
     <div class="container">
         <div class="row justify-content-between">

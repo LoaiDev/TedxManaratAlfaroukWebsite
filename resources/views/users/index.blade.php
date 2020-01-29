@@ -11,7 +11,7 @@
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Email</th>
-        <th scope="col">Types</th>
+        <th scope="col">User Type</th>
       </tr>
     </thead>
     <tbody>
@@ -29,7 +29,7 @@
           <th scope="row">{{$count}}</th>
           <td><a class="text-capitalize" href="/user/{{$user->id}}">{{$user->name}}</a></td>
           <td>{{$user->email}}</td>
-          <td class="text-capitalize">{{$user->user_types->first()->name ?? 'None'}}</td>
+          <td class="text-capitalize">{{$user->user_type->name ?? 'None'}}</td>
           </tr>
         @php
           $count++;
