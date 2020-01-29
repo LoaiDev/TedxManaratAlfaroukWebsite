@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Form;
+use App\FormType;
 use App\User;
 
 class FormController extends Controller
@@ -25,7 +26,7 @@ class FormController extends Controller
 
     public function list()
     {
-        $forms = Form::all()->get();
+        $forms = Form::all();
         return view ('forms.index')->with('forms',$forms);
     }
 
@@ -36,7 +37,8 @@ class FormController extends Controller
      */
     public function create()
     {
-        //
+        $formtypes = FormType::all();
+        return view('forms.create')->with('formtypes', $formtypes);
     }
 
     /**

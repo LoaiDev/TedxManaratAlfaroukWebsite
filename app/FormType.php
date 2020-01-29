@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FormTypes extends Model
+class FormType extends Model
 {
     use SoftDeletes;
 
