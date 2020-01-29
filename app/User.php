@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\UserType');
     }
+
+    public function registerations()
+    {
+        return $this->hasMany('App\Registeration');
+    }
 }
