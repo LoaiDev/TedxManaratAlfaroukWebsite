@@ -90,10 +90,10 @@ class UserController extends Controller
         }
         if($request->usertype != 0){
             //set the usertype parent to the parent input
-                $user->user_types()->sync($request->usertype);
+                $user->user_type_id = $request->usertype;
             }
             else{
-                $user->user_types()->detach();
+                $user->user_types_id = config('variable.defaultUserType');;
             }
             //save the user
             $user->save();
