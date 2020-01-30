@@ -30,4 +30,8 @@ Route::resource ('user', 'UserController' ,[
     'except' => ['store', 'create']
 ]);
 Route::get('/users', 'UserController@list');
+
+Route::resource('/form', 'FormController');
+Route::get('/forms', 'FormController@list')->name('form.list');
+
 Route::get('/test', 'test@index');
